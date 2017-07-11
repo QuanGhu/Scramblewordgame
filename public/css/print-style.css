@@ -1,0 +1,21 @@
+body{background-color: red;}
+.box-header{
+    display:none;
+}
+.box-body {
+    border: none;
+}
+.btn-print {
+    display:none;
+}
+.order-details{
+    margin: 0 0;
+}
+.col-md-6 {
+    width: 100%;
+    float:left;
+    padding:0;
+}
+.box {
+    border:0;
+}

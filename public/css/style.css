@@ -1,0 +1,56 @@
+/*Home Style*/
+
+.bg {
+    background-color : #302429;
+}
+
+.text1 {
+    color:#c5db3b;
+    text-align: center;
+}
+
+.white {
+    color: #fff;
+}
+
+.f18 {
+    font-size: 18px;
+}
+
+.mg80 {
+    margin-bottom: 80px;
+}
+
+.start-box {
+     position: fixed;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:active {
+    background:#c5db3b;
+    text-align: center;
+    border:0;
+    color: #000;
+    width: 100%;
+}
+
+.form-control.has-success {
+    border-color: #3c763d;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.form-control.has-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+label.has-error {
+    color: #fa0000;
+    font-size: 12px;
+}
