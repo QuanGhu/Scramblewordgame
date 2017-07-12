@@ -54,4 +54,15 @@ class home extends basecontroller {
         $viewModel = query::savePlayer($playername);
         header('Location: game');
     }
+
+    protected function stop()
+    {
+        session_start();
+        $player = $_SESSION['player_name'];
+        $score = $_SESSION['score'];
+        $viewModel = query::saveGame($player,$score);
+        unset($_SESSION['player_name']);
+        unset($_SESSION['score']);
+        header('Location: ../');
+    }
 }

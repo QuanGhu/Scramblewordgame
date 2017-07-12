@@ -263,4 +263,31 @@ class query extends abstractdb
             session_start();
             return $_SESSION['player_name'] = $playername;
         }
+
+        public static function saveGame($player,$score)
+        {
+            try {
+                $query = self::getDb()->query("INSERT INTO player_score (player_name,score) VALUES ('$player','$score')");
+                if($query==true) {
+                    return 'success';
+                } else {
+                    return self::getDb()->error;
+                }
+            }
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+                $json = array();
+                return json_encode(array('message'=>$e));
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+                $json = array();
+                return json_encode(array('message'=>$e));
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+                $json = array();
+                return json_encode(array('message'=>$e));
+            }
+        }
 }

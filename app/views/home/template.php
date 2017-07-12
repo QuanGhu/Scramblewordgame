@@ -32,8 +32,8 @@
                   if(isset($_SESSION['player_name']) && isset($_SESSION['score'])) : ?>
                       <ul class="nav navbar-nav navbar-right">
                         <li><a><span>Player Name : <?php echo $_SESSION['player_name']; ?></span></a></li>
-                        <li id="score" class="score-box"><a><span>Player Score : </span><span id="score-value">0</span></a></li>
-                        <li><a href="#">Stop Playing</a></li>
+                        <li id="score" class="score-box"><a><span>Player Score : </span><span id="score-value"><?php echo $_SESSION['score']; ?></span></a></li>
+                        <li><a href="home/stop">Stop Playing</a></li>
                       </ul>
                   <?php endif;?>
                 </div>

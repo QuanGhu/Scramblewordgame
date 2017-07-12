@@ -93,10 +93,9 @@ label.has-error {
 }
 
 .login-page {
-    background: #2a1f23;
     width: 30%;
     padding: 20px;
-    color: #cacaca;
+    color: #fff;
 }
 
 .login-page > h3 {
@@ -105,7 +104,7 @@ label.has-error {
 }
 
 .login-page .form-control {
-    background-color: #e3e3e3;
+    width: 100%;
 }
 
 .action-box {
