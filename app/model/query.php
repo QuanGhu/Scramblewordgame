@@ -181,7 +181,9 @@ class query extends abstractdb
 
         public static function saveScore($result)
         {
-
+            if(empty($_SESSION['score'])) {
+                $_SESSION['score'] = "";
+            }
             if($result=='Correct'){
                 $_SESSION['score'] += 1;
             } else {
@@ -288,6 +290,54 @@ class query extends abstractdb
                 $e->getMessage();
                 $json = array();
                 return json_encode(array('message'=>$e));
+            }
+        }
+
+        public static function login($user,$pass)
+        {
+            $passdescrypt = md5($pass);
+            $check = self::getDb()->query("SELECT * FROM admin_user WHERE username = '$user' AND passwd = '$passdescrypt'");
+            $row = $check->fetch_assoc();
+            $userdata = $row['username'];
+            $passdata = $row['passwd'];
+
+            if($user == $userdata AND $passdescrypt == $passdata )
+            {
+                session_start();
+                return $_SESSION['credential'] = $user;
+            } else {
+                return 'fail';
+            }
+        }
+
+        public static function getDataScore()
+        {
+            $query = "SELECT * FROM player_score order by score ASC";
+            $result = self::getDb()->query($query);
+
+            if($result->num_rows > 0) {
+                $json = array();
+                $no=1;
+                while($row = $result->fetch_assoc()){
+                    $json[] = array(
+                        $no,
+                        $row['player_name'],
+                        $row['score']
+                    );
+                $no++;
+                }
+                $response = array();
+                $response['success'] = true;
+                $response['aaData'] = $json;
+                echo json_encode($response);
+            } else {
+                $json = array();
+                $no='No Data';
+                $json[] = array ($no,'No Data');
+                $response = array();
+                $response['success'] = true;
+                $response['aaData'] = $json;
+                echo json_encode($response);
             }
         }
 }

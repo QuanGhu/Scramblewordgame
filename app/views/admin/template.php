@@ -42,6 +42,12 @@
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
+        <?php
+        session_start();
+         if (empty($_SESSION['credential'])) {
+         header("location:home");
+         }
+         ?>
         <div class="loading" style="display: none;">
             <div class="spinner">
               <div class="rect1"></div>

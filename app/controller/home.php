@@ -13,8 +13,15 @@ class home extends basecontroller {
     }
     protected function Game()
     {
-        $viewModel = "DATA";
-        $this->HomeView($viewModel);
+        if(isset($_SESSION['score'])) {
+            $viewModel = "DATA";
+            $this->HomeView($viewModel);
+        } else {
+            $_SESSION['score'] = 0;
+            $viewModel = $_SESSION['score'];
+            $this->HomeView($viewModel);
+        }
+
     }
 
     protected function Submit()
@@ -61,8 +68,19 @@ class home extends basecontroller {
         $player = $_SESSION['player_name'];
         $score = $_SESSION['score'];
         $viewModel = query::saveGame($player,$score);
-        unset($_SESSION['player_name']);
-        unset($_SESSION['score']);
+        session_destroy();
         header('Location: ../');
+    }
+
+    protected function doLogin()
+    {
+        $user = $_POST['username'];
+        $pass = $_POST['passwd'];
+        $viewModel = query::login($user,$pass);
+        if($viewModel !='fail') {
+            echo json_encode(array('result'=>'true'));
+        } else {
+            echo json_encode(array('result'=>'false'));
+        }
     }
 }

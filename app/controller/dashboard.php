@@ -7,6 +7,7 @@ use app\model\query;
 
 class dashboard extends basecontroller {
 
+
     protected function Index()
     {
         $viewModel = "DATA";
@@ -97,6 +98,25 @@ class dashboard extends basecontroller {
         } else {
             echo json_encode(array('result'=>'false'));
         }
+    }
+
+    protected function score()
+    {
+        $viewModel = "DATA";
+        $this->AdminView($viewModel);
+    }
+
+    protected function getSavedScore()
+    {
+        $viewModel = query::getDataScore();
+        return $viewModel;
+    }
+
+    protected function logout()
+    {
+        session_start();
+        session_destroy();
+        return header('Location: ../');
     }
 
 }
