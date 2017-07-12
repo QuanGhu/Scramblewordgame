@@ -41,4 +41,10 @@ class home extends basecontroller {
         $viewModel = query::getWord('word');
         echo json_encode(array('word'=>$viewModel));
     }
+
+    protected function login()
+    {
+        $viewModel = "DATA";
+        $this->HomeView($viewModel);
+    }
 }

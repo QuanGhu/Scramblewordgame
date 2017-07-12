@@ -5,6 +5,7 @@
         <base href="http://localhost/Scramble/">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="public/css/bootstrap.min.css">
+        <link rel="stylesheet" href="public/css/font-awesome.min.css">
          <link rel="stylesheet" href="public/css/style.css">
          <script src="public/js/jquery-1.12.3.min.js"></script>
          <script src="public/js/bootstrap.min.js"></script>

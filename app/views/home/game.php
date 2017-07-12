@@ -32,7 +32,7 @@
                         },
                     },
                     messages: {
-                        product_id: {
+                        answer: {
                             required: "This field is required"
                         },
                     },

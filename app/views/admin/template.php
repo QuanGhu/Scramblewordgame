@@ -12,7 +12,7 @@
           -->
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <base href="http://localhost/pos/">
+      <base href="http://localhost/Scramble/">
       <title>Admin | Dashboard</title>
       <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -20,6 +20,7 @@
       <link rel="stylesheet" href="Public/css/bootstrap.min.css">
       <link rel="stylesheet" href="Public/css/font-awesome.min.css">
       <link rel="stylesheet" href="Public/css/AdminLTE.min.css">
+      <link rel="stylesheet" href="Public/css/jquery-confirm.min.css">
       <link rel="stylesheet" href="Public/css/style.css">
       <link rel="stylesheet" href="Public/css/print-style.css" type="text/css" media="print" />
       <link rel="stylesheet" href="Public/css/jquery-ui.css">
@@ -34,18 +35,13 @@
       <script src="Public/js/app.min.js"></script>
       <script src="Public/js/jquery.validate.min.js"></script>
       <script src="Public/js/jquery.PrintArea.js"></script>
+      <script src="Public/js/jquery-confirm.min.js"></script>
       <script src="Public/plugins/DataTables/media/js/jquery.dataTables.js"></script>
       <script src="Public/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
       <script src="Public/js/fnStandingRedraw.js"></script>
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
-        <?php
-        session_start();
-         if (empty($_SESSION['username'])) {
-         header("location:home");
-         }
-         ?>
         <div class="loading" style="display: none;">
             <div class="spinner">
               <div class="rect1"></div>
@@ -60,9 +56,9 @@
               <!-- Logo -->
               <a href="index2.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini">POS</span>
+                <span class="logo-mini">ADM</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">POINT OF SALE</span>
+                <span class="logo-lg">Admin Page</span>
               </a>
               <nav class="navbar navbar-static-top">
                 <!-- Sidebar toggle button-->
