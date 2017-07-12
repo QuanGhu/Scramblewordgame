@@ -46,6 +46,18 @@
     }
 }
 
+@media(max-width: 767px) and (orientation : landscape) {
+    .start-box {
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+}
+
 .transparant {
     background: transparent;
 }
