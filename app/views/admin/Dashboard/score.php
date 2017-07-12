@@ -21,6 +21,7 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
     $('#datascores').dataTable({
+        "order": [[ 2, "desc" ]],
         "bProcessing": true,
         responsive: true,
         "sAjaxSource": 'dashboard/getSavedScore'
