@@ -101,6 +101,7 @@ $(document).ready(function(e) {
                                 $('#message-type').html('Error !');
                                 $('#message').html('Something went wrong');
                             }
+                            $('#formwordnewdata')[0].reset();
                             $('#datatables').DataTable().ajax.reload();
                             $('#newModal').modal('hide');
                             $('#message-box').show();
@@ -120,10 +121,6 @@ $(document).ready(function(e) {
             return false;
         }
     });
-    // Jquery Alert
-    // $("#delete").click(function() {
-
-    // });
     $(document).on('click','.delete',function(){
         var id = $(this).attr("data");
         $.confirm({
@@ -181,6 +178,4 @@ $(document).ready(function(e) {
         });
     }
 });
-
-
 </script>

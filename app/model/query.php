@@ -12,11 +12,11 @@ class query extends abstractdb
                 $strColumns = implode(", ", array_keys($arrData));
                 $strValues  = "'" . implode("','", array_values($arrData)). "'";
                 try {
-                    $query = self::getDB()->query("INSERT INTO $tableName ($strColumns) VALUES ($strValues)");
+                    $query = self::getDb()->query("INSERT INTO $tableName ($strColumns) VALUES ($strValues)");
                     if($query==true) {
                         return 'success';
                     } else {
-                        return self::getDB()->error;
+                        return self::getDb()->error;
                     }
                 }
                 catch (MySQLDuplicateKeyException $e) {
@@ -38,11 +38,55 @@ class query extends abstractdb
 
         public static function deleteData($tableName, $primary, $id)
         {
-            $query = self::getDB()->query("DELETE FROM $tableName WHERE $primary = '$id'");
+            $query = self::getDb()->query("DELETE FROM $tableName WHERE $primary = '$id'");
             if($query==true) {
                 return 'success';
             } else {
-                return self::getDB()->error;
+                return self::getDb()->error;
+            }
+        }
+
+        public static function updateData($tableName,$arrData,$primary,$id)
+        {
+            $query = self::getDb()->query("UPDATE $tableName SET " .self::setFormatUpdate($arrData)." WHERE $primary='$id' ");
+            if($query==true) {
+                return 'success';
+            } else {
+                return self::getDb()->error;
+            }
+        }
+
+        public static function setFormatUpdate($arrData, $strConcat = ", ")
+        {
+           $strAttribute = "";
+           if ($arrData != null)
+           {
+                 if (is_array($arrData))
+                 {
+                   $arrResult = array();
+                   foreach ($arrData as $key => $value)
+                   {
+                     $arrResult[] = $key." = '".$value."'";
+                   }
+                   $strAttribute = implode($strConcat, $arrResult);
+                 }
+                 else
+                   $strAttribute = $arrData;
+           }
+                return $strAttribute;
+        }
+
+        public static function getWordById($tableName, $primary, $id)
+        {
+            $query = self::getDb()->query("SELECT * FROM $tableName WHERE $primary = '$id'");
+            if($query==true) {
+                $array = array();
+                while($row = $query->fetch_assoc()) {
+                    $array = array($row['id'],$row['list']);
+                }
+                return $array;
+            } else {
+                return self::getDb()->error;
             }
         }
 
@@ -112,7 +156,7 @@ class query extends abstractdb
                     $json[] = array(
                         $no,
                         $row['list'],
-                        '<a href="#" class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</a>
+                        '<a class="btn btn-info edit" href="dashboard/edit/'.$row['id'].'">Edit</a>
                          <a data="'.$row['id'].'" class="btn btn-danger delete">Remove</a>
                         '
                     );

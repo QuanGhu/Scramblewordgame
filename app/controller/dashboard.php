@@ -50,4 +50,23 @@ class dashboard extends basecontroller {
         }
     }
 
+    protected function edit()
+    {
+        $id = $_GET['id'];
+        $viewModel = query::getWordById('word','id',$id);
+        $this->AdminView($viewModel);
+    }
+
+    protected function updateData()
+    {
+        $id = $_POST['id'];
+        $arrData = $_POST;
+        $viewModel = query::updateData('word',$arrData,'id',$id);
+        if($viewModel =='success') {
+            echo json_encode(array('result'=>'true'));
+        } else {
+            echo json_encode(array('result'=>'false'));
+        }
+    }
+
 }
