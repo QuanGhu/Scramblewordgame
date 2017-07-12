@@ -47,4 +47,11 @@ class home extends basecontroller {
         $viewModel = "DATA";
         $this->HomeView($viewModel);
     }
+
+    protected function start()
+    {
+        $playername = $_POST['playername'];
+        $viewModel = query::savePlayer($playername);
+        header('Location: game');
+    }
 }

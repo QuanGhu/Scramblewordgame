@@ -7,33 +7,84 @@ use app\model\abstractdb;
 class query extends abstractdb
 {
 
-        public static function saveData($tableName,$arrData)
+        public static function saveDataWord($tableName,$list)
         {
-                $strColumns = implode(", ", array_keys($arrData));
-                $strValues  = "'" . implode("','", array_values($arrData)). "'";
-                try {
-                    $query = self::getDb()->query("INSERT INTO $tableName ($strColumns) VALUES ($strValues)");
-                    if($query==true) {
-                        return 'success';
-                    } else {
-                        return self::getDb()->error;
+                $data = strtolower($list);
+                $check = self::getDb()->query("SELECT * FROM word WHERE list = '$data'");
+                $row = $check->fetch_assoc();
+                $available = $row['list'];
+
+                if($data != $available) {
+                    try {
+                        $query = self::getDb()->query("INSERT INTO $tableName (list) VALUES ('$data')");
+                        if($query==true) {
+                            return 'success';
+                        } else {
+                            return self::getDb()->error;
+                        }
+                    }
+                    catch (MySQLDuplicateKeyException $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
+                    }
+                    catch (MySQLException $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
+                    }
+                    catch (Exception $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
                     }
                 }
-                catch (MySQLDuplicateKeyException $e) {
-                    $e->getMessage();
-                    $json = array();
-                    return json_encode(array('message'=>$e));
+
+                else {
+                    return 'duplicate';
                 }
-                catch (MySQLException $e) {
-                    $e->getMessage();
-                    $json = array();
-                    return json_encode(array('message'=>$e));
+
+        }
+
+        public static function saveDataAdmin($tableName,$user,$pass)
+        {
+                $username = strtolower($user);
+                $password = strtolower($pass);
+                $check = self::getDb()->query("SELECT * FROM admin_user WHERE username = '$username'");
+                $row = $check->fetch_assoc();
+                $available = $row['username'];
+
+                if($username != $available) {
+                    try {
+                        $passencrpyt = md5($password);
+                        $query = self::getDb()->query("INSERT INTO $tableName (username,passwd) VALUES ('$username','$passencrpyt')");
+                        if($query==true) {
+                            return 'success';
+                        } else {
+                            return self::getDb()->error;
+                        }
+                    }
+                    catch (MySQLDuplicateKeyException $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
+                    }
+                    catch (MySQLException $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
+                    }
+                    catch (Exception $e) {
+                        $e->getMessage();
+                        $json = array();
+                        return json_encode(array('message'=>$e));
+                    }
                 }
-                catch (Exception $e) {
-                    $e->getMessage();
-                    $json = array();
-                    return json_encode(array('message'=>$e));
+
+                else {
+                    return 'duplicate';
                 }
+
         }
 
         public static function deleteData($tableName, $primary, $id)
@@ -166,6 +217,50 @@ class query extends abstractdb
                 $response['success'] = true;
                 $response['aaData'] = $json;
                 echo json_encode($response);
+            } else {
+                $json = array();
+                $no='No Data';
+                $json[] = array ($no,'No Data');
+                $response = array();
+                $response['success'] = true;
+                $response['aaData'] = $json;
+                echo json_encode($response);
+            }
         }
-    }
+
+        public static function getDataAdmin()
+        {
+            $query = "SELECT * FROM admin_user";
+            $result = self::getDb()->query($query);
+
+            if($result->num_rows > 0) {
+                $json = array();
+                $no=1;
+                while($row = $result->fetch_assoc()){
+                    $json[] = array(
+                        $no,
+                        $row['username']
+                    );
+                $no++;
+                }
+                $response = array();
+                $response['success'] = true;
+                $response['aaData'] = $json;
+                echo json_encode($response);
+            } else {
+                $json = array();
+                $no='No Data';
+                $json[] = array ($no,'No Data');
+                $response = array();
+                $response['success'] = true;
+                $response['aaData'] = $json;
+                echo json_encode($response);
+            }
+        }
+
+        public static function savePlayer($playername)
+        {
+            session_start();
+            return $_SESSION['player_name'] = $playername;
+        }
 }

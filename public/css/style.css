@@ -1,11 +1,6 @@
-/*Home Style*/
-
-.bg {
-    background-color : #302429;
-}
 
 .text1 {
-    color:#c5db3b;
+    color: #676765;
     text-align: center;
 }
 
@@ -17,27 +12,69 @@
     font-size: 18px;
 }
 
-.mg80 {
-    margin-bottom: 80px;
-}
 
 .start-box {
      position: fixed;
      top: 50%;
      left: 50%;
      transform: translate(-50%, -50%);
+     width: 50%;
+     background: #70bbff;
+     border-radius: 15px;
+     text-align: center;
 }
 
-.btn-default,
-.btn-default:hover,
-.btn-default:active {
-    background:#c5db3b;
-    text-align: center;
+.start-box .form-control {
+    width: 30%;
+    margin: 0 auto;
+    border-radius: 0;
+}
+
+.start-box h2 {
+    font-size: 65px;
+    color: #fff;
+    margin-bottom: 50px;
+}
+@media(max-width: 767px) {
+    .start-box,
+    .start-box .form-control,
+    .start-box .btn-default {
+        width: 90%;
+    }
+    .start-box .btn-default {
+        margin-left: 0;
+    }
+}
+
+.transparant {
+    background: transparent;
+}
+
+.navbar-default {
+    background-color: #3797ed;
     border:0;
-    color: #000;
-    width: 100%;
+    border-radius:0;
+    margin-bottom:0;
 }
 
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+}
+
+.content {
+    min-height: calc(100vh - 100px);
+    padding-top: 50px;
+}
+
+.footer {
+    background-color: #3797ed;
+    padding: 10px;
+}
 .form-control.has-success {
     border-color: #3c763d;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);

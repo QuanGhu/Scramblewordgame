@@ -1,28 +1,25 @@
 <section class="content">
     <div class="container">
-        <div class="box-content">
-            <div id="message-box" class="alert">
-              <strong><span id="message-type"></span></strong> <span id="message"></span>
-            </div>
-            <div id="score" class="score-box">
-                <span id="score-value" class="white"></span>
-            </div>
-            <div class="start-box">
-                <h2 id="word" class="text1 mg80"></h2>
-                <form method="post" id="formanswer">
-                    <div class="form-group">
-                        <label for="email" class="white">Please input your answer here:</label>
-                        <input type="text" class="form-control" name="answer"/>
-                     </div>
-                     <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-content">
+                    <div class="start-box">
+                        <h2 id="word" class="text1"></h2>
+                        <form method="post" id="formanswer">
+                            <div class="form-group">
+                                <label for="email" class="white">Please input your answer here:</label>
+                                <input type="text" class="form-control" name="answer"/>
+                             </div>
+                             <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script type="text/javascript">
             $(document).ready(function() {
                 getWord();
-                $('#message-box').hide();
                 $('#formanswer').validate({
                     errorClass: "has-error", // initialize the plugin
                     validClass: "has-success", // initialize the plugin
@@ -46,23 +43,23 @@
                                     success: function(result) {
                                         var message = $.parseJSON(result);
                                         $('#formanswer')[0].reset();
-                                        if($('#message-box').hasClass('alert-success')) {
-                                            $('#message-box').removeClass('alert-success');
-                                        }
-                                        if($('#message-box').hasClass('alert-danger')) {
-                                            $('#message-box').removeClass('alert-danger');
-                                        }
                                         if(message.message=='true'){
                                             $('#message-box').addClass('alert-success');
                                             $('#message-type').html('Congratulation !');
                                             $('#message').html('Your answer is correct !');
+                                            $.alert({
+                                                title: 'Congratulation !!',
+                                                type: 'blue',
+                                                content: 'Your answer is correct, your score will increase by 1 !',
+                                            });
                                         }
                                         else {
-                                            $('#message-box').addClass('alert-danger');
-                                            $('#message-type').html('Opps !');
-                                            $('#message').html('Your answer is wrong !');
+                                            $.alert({
+                                                title: 'Ooops !!',
+                                                type: 'red',
+                                                content: 'Your answer is correct, your score will decrease by 1 !',
+                                            });
                                         }
-                                        $('#message-box').show()
                                         getScore();
                                         getWord();
                                     },

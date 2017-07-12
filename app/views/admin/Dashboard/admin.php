@@ -8,14 +8,13 @@
               <strong><span id="message-type"></span></strong> <span id="message"></span>
             </div>
             <div class="action-box">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newModal">Add New Word</button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newModal">Add New Admin</button>
             </div>
-            <table class="table table-hover" id="datatables">
+            <table class="table table-hover" id="dataadmin">
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Word</th>
-                    <th>Action</th>
+                    <th>Admin User</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -29,13 +28,17 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add New Word</h4>
+                <h4 class="modal-title">Add New Admin</h4>
               </div>
               <div class="modal-body">
-                  <form method="POST" id="formwordnewdata">
+                  <form method="POST" id="formwordnewadmin">
                     <div class="form-group">
-                      <label>Word</label>
-                      <input type="text" class="form-control" name="list">
+                      <label>Username</label>
+                      <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" class="form-control" name="passwd">
                     </div>
               </div>
               <div class="modal-footer">
@@ -52,27 +55,27 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
     $('#message-box').hide();
-    $('#datatables').dataTable({
+    $('#dataadmin').dataTable({
         "bProcessing": true,
         responsive: true,
-        "sAjaxSource": 'dashboard/getWord'
+        "sAjaxSource": 'dashboard/getAdmin'
     });
-    $('#formwordnewdata').validate({
+    $('#formwordnewadmin').validate({
         errorClass: "has-error", // initialize the plugin
         validClass: "has-success", // initialize the plugin
         rules: {
-            list: {
+            username: {
                 required: true
             },
-            level: {
+            passwd: {
                 required: true
             }
         },
         messages: {
-            list: {
+            username: {
                 required: "This field is required"
             },
-            level: {
+            passwd: {
                 required: "This field is required"
             }
         },
@@ -80,8 +83,8 @@ $(document).ready(function(e) {
             e.preventDefault();
             $.ajax({
                         type: 'POST',
-                        url: "dashboard/saveData",
-                        data: $('#formwordnewdata').serialize(),
+                        url: "dashboard/saveAdmin",
+                        data: $('#formwordnewadmin').serialize(),
                         cache: false,
                         success: function(result) {
                             var response = $.parseJSON(result);
@@ -99,14 +102,14 @@ $(document).ready(function(e) {
                             else if (response.result=='duplicate'){
                                 $('#message-box').addClass('alert-danger');
                                 $('#message-type').html('Error !');
-                                $('#message').html('The word you have input already exists ! ');
+                                $('#message').html('The admin you have input already exists ! ');
                             }else {
                                 $('#message-box').addClass('alert-danger');
                                 $('#message-type').html('Error !');
                                 $('#message').html('Something went wrong');
                             }
-                            $('#formwordnewdata')[0].reset();
-                            $('#datatables').DataTable().ajax.reload();
+                            $('#formwordnewadmin')[0].reset();
+                            $('#dataadmin').DataTable().ajax.reload();
                             $('#newModal').modal('hide');
                             $('#message-box').show();
                         },
@@ -125,61 +128,5 @@ $(document).ready(function(e) {
             return false;
         }
     });
-    $(document).on('click','.delete',function(){
-        var id = $(this).attr("data");
-        $.confirm({
-            title: 'Confirm!',
-            content: 'Are you sure want to delete this word?',
-            buttons: {
-                confirm: function () {
-                    deleteData(id);
-                    $('#datatables').DataTable().ajax.reload();
-                },
-                cancel: function () {
-                    // close();
-                },
-            }
-        });
-    });
-    function deleteData(id) {
-        var id = id;
-        $.ajax({
-            type: 'POST',
-            cache: false,
-            url: "dashboard/deleteData/"+id,
-            success: function(result) {
-                var url = "dashboard/deleteData/"+id;
-                var response = $.parseJSON(result);
-                if($('#message-box').hasClass('alert-success')) {
-                    $('#message-box').removeClass('alert-success');
-                }
-                if($('#message-box').hasClass('alert-danger')) {
-                    $('#message-box').removeClass('alert-danger');
-                }
-                if(response.result=='true'){
-                    $('#message-box').addClass('alert-success');
-                    $('#message-type').html('Deleted !');
-                    $('#message').html('Record was deleted');
-                }
-                else {
-                    $('#message-box').addClass('alert-danger');
-                    $('#message-type').html('Error !');
-                    $('#message').html('Something went wrong');
-                }
-                $('#message-box').show();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                if($('#message-box').hasClass('alert-success')) {
-                    $('#message-box').removeClass('alert-success');
-                }
-                if($('#message-box').hasClass('alert-danger')) {
-                    $('#message-box').removeClass('alert-danger');
-                }
-                $('#message-box').addClass('alert-danger');
-                $('#message-type').html('Opps !');
-                $('#message').html(thrownError);
-            }
-        });
-    }
 });
 </script>

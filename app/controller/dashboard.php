@@ -20,6 +20,13 @@ class dashboard extends basecontroller {
         $this->AdminView($viewModel);
 
     }
+    protected function admin()
+    {
+        // $viewModel = query::getData('category_product');
+        $viewModel = "DATA";
+        $this->AdminView($viewModel);
+
+    }
 
     protected function getWord()
     {
@@ -27,15 +34,38 @@ class dashboard extends basecontroller {
         return $viewModel;
     }
 
+    protected function getAdmin()
+    {
+        $viewModel = query::getDataAdmin();
+        return $viewModel;
+    }
+
     protected function saveData()
     {
-        $arrData = $_POST;
-        $viewModel = query::saveData('word',$arrData);
+        $list = $_POST['list'];
+        $viewModel = query::saveDataWord('word',$list);
         $abc = array();
         if($viewModel =='success') {
             echo json_encode(array('result'=>'true'));
+        } elseif($viewModel =='duplicate') {
+            echo json_encode(array('result'=>'duplicate'));
         } else {
             echo json_encode(array('result'=>'false'));
+        }
+    }
+
+    protected function saveAdmin()
+    {
+        $user = $_POST['username'];
+        $pass = $_POST['passwd'];
+        $viewModel = query::saveDataAdmin('admin_user',$user,$pass);
+        $abc = array();
+        if($viewModel =='success') {
+            echo json_encode(array('result'=>'true'));
+        } elseif($viewModel =='duplicate') {
+            echo json_encode(array('result'=>'duplicate'));
+        } else {
+            echo json_encode(array('result'=>$viewModel));
         }
     }
 
